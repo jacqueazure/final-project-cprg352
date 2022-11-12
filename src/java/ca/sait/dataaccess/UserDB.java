@@ -11,9 +11,13 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.List;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
 
 /**
  *
@@ -71,5 +75,81 @@ public class UserDB {
             
             return null;
         }
+    }
+    
+    
+    public boolean createUser(User user) {
+        EntityManagerFactory emFactory = DBUtil.getEmFactory();
+
+        EntityManager em = emFactory.createEntityManager();
+
+        try {
+            em.getTransaction().begin();
+            em.persist(user);
+            em.getTransaction().commit();
+
+            return true;
+        } catch (Exception ex) {
+            em.getTransaction().rollback();
+
+            return false;
+        } finally {
+            em.close();
+        }
+
+    }
+
+    public void deleteUser(User user) {
+        EntityManagerFactory emFactory = DBUtil.getEmFactory();
+
+        EntityManager em = emFactory.createEntityManager();
+
+        EntityTransaction trans = em.getTransaction();
+
+        User ref = em.find(User.class, user.getEmail());
+
+        try {
+            trans.begin();
+            em.remove(ref);
+            trans.commit();
+
+        } catch (Exception ex) {
+            trans.rollback();
+        } finally {
+            em.close();
+        }
+
+    }
+
+    public void updateUser(User user) {
+        EntityManagerFactory emFactory = DBUtil.getEmFactory();
+        EntityManager em = emFactory.createEntityManager();
+        User ref = em.find(User.class, user.getEmail());
+
+        ref.setActive(user.getActive());
+        ref.setFirstName(user.getFirstName());
+        ref.setLastName(user.getLastName());
+        ref.setRole(user.getRole());
+        
+        EntityTransaction trans = em.getTransaction();
+        
+        try {
+            trans.begin();
+            em.persist(ref);
+            trans.commit();
+
+        } catch (Exception ex) {
+            trans.rollback();
+        } finally {
+            em.close();
+        }
+    }
+
+    public List<User> getAll() {
+        EntityManagerFactory emFactory = DBUtil.getEmFactory();
+
+        EntityManager em = emFactory.createEntityManager();
+
+        return em.createNamedQuery("User.findAll", User.class).getResultList();
     }
 }

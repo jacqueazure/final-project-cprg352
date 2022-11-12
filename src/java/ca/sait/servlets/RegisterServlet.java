@@ -4,8 +4,13 @@
  */
 package ca.sait.servlets;
 
+import ca.sait.models.Role;
+import ca.sait.models.User;
+import ca.sait.services.RoleService;
+import ca.sait.services.UserService;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Vector;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -16,7 +21,9 @@ import javax.servlet.http.HttpServletResponse;
  * @author Arcto
  */
 public class RegisterServlet extends HttpServlet {
-
+    private final Role DEFAULT_ROLE = new Role(2, "regular user");
+    private final boolean DEFAULT_ACTIVE = true;
+    
    /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -42,6 +49,27 @@ public class RegisterServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-         this.getServletContext().getRequestDispatcher("/WEB-INF/register.jsp").forward(request, response);
+        String inputFirstName = request.getParameter("inputFirstName");
+        String inputLastName = request.getParameter("inputLastName");
+        String inputEmail = request.getParameter("inputEmail");
+        String inputPasswordFirst = request.getParameter("inputPasswordFirst");
+        String inputPasswordSecond = request.getParameter("inputPasswordSecond");
+        
+        if(inputFirstName != null && inputLastName != null &&
+                inputFirstName != null && inputPasswordFirst != null && inputPasswordSecond != null && inputPasswordFirst.equals(inputPasswordSecond)) {
+            UserService userService = new UserService();
+            User newUser = new User(inputEmail, DEFAULT_ACTIVE, inputFirstName, inputLastName, inputPasswordFirst);
+            
+            newUser.setRole(DEFAULT_ROLE);
+            
+            boolean success = userService.createUser(newUser);
+            
+            if(success) {
+                response.sendRedirect("home");
+                return;
+            }
+        }
+        
+        this.getServletContext().getRequestDispatcher("/WEB-INF/register.jsp").forward(request, response);
     }
 }
