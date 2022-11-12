@@ -36,7 +36,7 @@ public class HomeServlet extends HttpServlet {
             request.getSession().invalidate();
             response.sendRedirect("home");
             return;
-        }
+        } 
         
         if (user == null) {
             response.sendRedirect("login");

@@ -3,7 +3,7 @@
     Created on : 11-Nov-2022, 7:02:31 PM
     Author     : Arcto
 --%>
-
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -32,7 +32,7 @@
                                             <input required type="text" name="inputFirstName" id="inputFirstName" class="form-control form-control-lg" />
                                             <label class="form-label" for="inputFirstName">First Name</label>
                                         </div>
-                                        
+
                                         <div class="form-outline mb-4">
                                             <input required type="text" name="inputLastName" id="inputLastName" class="form-control form-control-lg" />
                                             <label class="form-label" for="inputLastName">Last Name</label>
@@ -58,6 +58,11 @@
 
                                         <p class="text-center text-muted mt-5 mb-0">Have already an account? <a href="/finalproject/login"
                                                                                                                 class="fw-bold text-body"><u>Login here</u></a></p>
+                                       <c:if test="${message != null}">
+                                            <div class="mt-4 text-center text-danger">
+                                                <p><c:out value ="${message.toString()}"></c:out></p>
+                                            </div>
+                                        </c:if>
                                     </form>
                                 </div>
                             </div>

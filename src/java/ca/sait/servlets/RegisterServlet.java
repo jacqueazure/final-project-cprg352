@@ -54,6 +54,7 @@ public class RegisterServlet extends HttpServlet {
         String inputEmail = request.getParameter("inputEmail");
         String inputPasswordFirst = request.getParameter("inputPasswordFirst");
         String inputPasswordSecond = request.getParameter("inputPasswordSecond");
+        String message = null;
         
         if(inputFirstName != null && inputLastName != null &&
                 inputFirstName != null && inputPasswordFirst != null && inputPasswordSecond != null && inputPasswordFirst.equals(inputPasswordSecond)) {
@@ -67,7 +68,13 @@ public class RegisterServlet extends HttpServlet {
             if(success) {
                 response.sendRedirect("home");
                 return;
+            } else {
+                message = "That email is already in use";
+                request.setAttribute("message", message);
             }
+        } else {
+             message = "Both passwords do not match! Please try again";
+             request.setAttribute("message", message);
         }
         
         this.getServletContext().getRequestDispatcher("/WEB-INF/register.jsp").forward(request, response);
