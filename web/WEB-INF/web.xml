@@ -16,6 +16,14 @@
         <servlet-name>RegisterServlet</servlet-name>
         <servlet-class>ca.sait.servlets.RegisterServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ManageAccountServlet</servlet-name>
+        <servlet-class>ca.sait.servlets.ManageAccountServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ManageInventory</servlet-name>
+        <servlet-class>ca.sait.servlets.ManageInventoryServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>HomeServlet</servlet-name>
         <url-pattern>/home</url-pattern>
@@ -31,6 +39,14 @@
     <servlet-mapping>
         <servlet-name>RegisterServlet</servlet-name>
         <url-pattern>/register</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ManageAccountServlet</servlet-name>
+        <url-pattern>/manageaccount</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ManageInventory</servlet-name>
+        <url-pattern>/manageinventory</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

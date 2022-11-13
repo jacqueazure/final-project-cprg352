@@ -4,11 +4,11 @@
  */
 package ca.sait.servlets;
 
-
 import ca.sait.models.Item;
 import ca.sait.models.User;
 import ca.sait.services.ItemService;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Vector;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -19,9 +19,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Arcto
  */
-public class HomeServlet extends HttpServlet {
-
-    /**
+public class ManageAccountServlet extends HttpServlet {
+  /**
      * Handles the HTTP <code>GET</code> method.
      *
      * @param request servlet request
@@ -34,8 +33,7 @@ public class HomeServlet extends HttpServlet {
             throws ServletException, IOException {
         User user = (User) request.getSession().getAttribute("user");
         String action = request.getParameter("action");
-        ItemService itemService = new ItemService();
-        
+ 
         if (action != null && action.equals("logout")) {
             request.getSession().invalidate();
             response.sendRedirect("home");
@@ -47,10 +45,8 @@ public class HomeServlet extends HttpServlet {
             return;
         }
         
-        Vector<Item> usersItems = itemService.getAll(user);
-        request.setAttribute("usersItems", usersItems);
         
-        this.getServletContext().getRequestDispatcher("/WEB-INF/home.jsp").forward(request, response);
+        this.getServletContext().getRequestDispatcher("/WEB-INF/manageaccount.jsp").forward(request, response);
     }
 
     /**
@@ -64,6 +60,6 @@ public class HomeServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-         this.getServletContext().getRequestDispatcher("/WEB-INF/home.jsp").forward(request, response);
+         this.getServletContext().getRequestDispatcher("/WEB-INF/manageaccount.jsp").forward(request, response);
     }
 }

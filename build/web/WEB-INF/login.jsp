@@ -23,7 +23,7 @@
             <div class="align-self-center pr-3" ><a class="btn btn-primary" href="#">Contact Admin</a></div>
         </header>
         <div class="d-flex justify-content-center align-self-center">
-            <div class="card p-3 align-self-center" style="width: 26rem; border-radius: 15px;"" >
+            <div class="card p-3 mb-5 align-self-center" style="width: 26rem; border-radius: 15px;"" >
                 <div class="card-body p-5">
                     <h2 class="text-uppercase text-center mb-5">Login</h2>
                     <form action="login" method="post">
